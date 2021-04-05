@@ -1,10 +1,6 @@
 package fr.pgah.libgdx;
 
-
-
-
 import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -118,6 +114,14 @@ public class Sprite {
         false, false);
       
         
+  }
+  public boolean seTrouveSur(Souris souris) {
+    
+      if (rekt.overlaps(souris.rekt)) {  //zone de collision de la souris
+        return true;
+    } else {
+        return false;
+   }
   }
     
 }

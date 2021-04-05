@@ -1,14 +1,13 @@
- package fr.pgah.libgdx;
+package fr.pgah.libgdx;
 
 import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Joueur {
+public class Souris {
 
     
     int coordX;
@@ -21,13 +20,14 @@ public class Joueur {
     Texture img;
     final int vitesse = 5;
     Rectangle rekt;
+    Boolean clickgauche;
+    int NBshoot = 2;
 
-   public Joueur() {
+   public Souris() {
     
-    
-    img2 = new Texture("Mario.png");
-    coordX = 0;
-    coordX = 0;
+    img2 = new Texture("viseur.png");
+    //coordX = 0;
+    //coordX = 0;
     longueureffective = img2.getWidth();
     hauteureffective = img2.getHeight();
     longueurFenetre = Gdx.graphics.getWidth();
@@ -37,30 +37,15 @@ public class Joueur {
    }
 
 	public void maJEtat() {
-        deplacer();
+        Suivre_souris();
         forcerAresterDansCadre();
 	}
 
-    private void deplacer() {
-    
-    if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-        coordX -= vitesse;
-    }
+    private void Suivre_souris() {
 
-    if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-        coordX += vitesse;
-
-    }
-    if (Gdx.input.isKeyPressed(Input.Keys.UP)){
-        coordY += vitesse;
-
-    }
-    if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-        coordY -= vitesse;
-
-    }
-     rekt.setPosition(coordX, coordY); // changer les coordonnées du rectangle
-}
+        coordX = Gdx.input.getX()-25;  // donne les emplacements en X et Y de la souris 
+        coordY = Gdx.graphics.getHeight() - Gdx.input.getY()-25;
+     }
 
     private  void forcerAresterDansCadre() {
          // Gestion bordure droite
@@ -87,7 +72,7 @@ public class Joueur {
   }
     
 
-    public void dessiner(SpriteBatch batch) {   //Les variables local sont supprimés dés que l'on sort de la méthode
+  public void dessiner(SpriteBatch batch) {   //Les variables local sont supprimés dés que l'on sort de la méthode
                                                 // ici c'est la copie de la rérérence a l'objet batch qui disparait mais la réference continue a éxister dans la class principal 
         batch.draw(img2,coordX, coordY);
       }
@@ -113,7 +98,38 @@ public class Joueur {
             return false;
         }
     }
+    public boolean clicGauche() {
+        if (entreeClicGauche()) {
+            return true;
+        }
+        return false;
+    }
 
+    private boolean entreeClicGauche() {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean clicGauchetir(){
+      if (entrerclicGauchetir()){
+        NBshoot = NBshoot -1;
+        System.out.println("Il vous reste " + NBshoot + " balles");
+        return true;
+      }
+        return false;
+    }
+
+    private boolean entrerclicGauchetir(){
+      if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+        return true;
+    }
+        return false;
+    }
 }
+
     
+
+
 
